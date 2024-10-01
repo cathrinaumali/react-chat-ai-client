@@ -3,7 +3,8 @@ import Axios from "axios";
 Axios.defaults.headers.get["Pragma"] = "no-cache";
 Axios.defaults.headers.get["Cache-Control"] = "no-cache, no-store";
 
-const API_BASE = "http://localhost:5001/api";
+const apiUrl = import.meta.env.VITE_API_URL;
+const API_BASE = `${apiUrl}/api`;
 
 const instance = Axios.create({
   baseURL: `${API_BASE}`,
