@@ -2,25 +2,34 @@ import React, { createContext, useState, ReactNode } from "react";
 import { generateAnswer } from "../service/index";
 
 // Define the shape of the context data
-interface AppContextType {
-  value: string;
-  setValue: (newValue: string) => void;
+export interface AppContextType {
+  isLoading: boolean;
+  promptResult: string;
+  recetPrompts: string[];
+  onSubmitPrompt: (newValue: string) => void;
 }
 
+const defaultValue: AppContextType = {
+  isLoading: false,
+  promptResult: "",
+  recetPrompts: [],
+  onSubmitPrompt: (newValue: string) => newValue,
+};
+
 // Create the context with default values
-export const AppContext = createContext<AppContextType | undefined>(undefined);
+export const AppContext = createContext<AppContextType>(defaultValue);
 
 // Create a provider component
 export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [value, setValue] = useState<string>("Hello, World!");
-  const [inputValue, setInputValue] = useState<string>("");
   const [promptResult, setPromptResult] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [recetPrompts, setRecentPrompts] = useState<string[]>([]);
 
   const onSubmitPrompt = async (value: string) => {
     setIsLoading(true);
+    setRecentPrompts((recent) => [...recent, value]);
     const result = await generateAnswer(value);
     const {
       data: { response },
@@ -35,7 +44,9 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AppContext.Provider value={{ isLoading, onSubmitPrompt }}>
+    <AppContext.Provider
+      value={{ isLoading, recetPrompts, promptResult, onSubmitPrompt }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -19,6 +19,8 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 
+import "./Layout.styles.scss";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -254,7 +256,11 @@ export default function Layout({ children }) {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        className="main-container"
+        sx={{ flexGrow: 1, p: 3 }}
+      >
         <DrawerHeader />
         {children}
       </Box>

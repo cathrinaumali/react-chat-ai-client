@@ -5,11 +5,13 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 interface InputFieldProps {
   placeholder?: string;
   inputText?: string;
+  isDisabled?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onButtonClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function InputField({
+  isDisabled = true,
   placeholder = "Ask Anything...",
   inputText = "",
   onChange,
@@ -24,7 +26,12 @@ export default function InputField({
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <Button variant="contained" color="primary" onClick={onButtonClick}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={isDisabled}
+              onClick={onButtonClick}
+            >
               <ArrowUpwardIcon />
             </Button>
           </InputAdornment>
