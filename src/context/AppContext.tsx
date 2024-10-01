@@ -3,7 +3,8 @@ import { generateAnswer } from "../service/index";
 
 interface Conversation {
   message: string;
-  response: string;
+  response?: string | undefined;
+  loadingResponse: boolean;
 }
 // Define the shape of the context data
 export interface AppContextType {
@@ -37,6 +38,11 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
   const onSubmitPrompt = async (value: string) => {
     setIsLoading(true);
     setRecentPrompts((r) => [...r, value]);
+    setConversations((c) => [
+      ...c,
+      { message: value, loadingResponse: true, response: undefined },
+    ]);
+
     const result = await generateAnswer(value);
     const {
       data: { response },
@@ -46,7 +52,15 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
     if (success) {
       setIsLoading(false);
       setPromptResult(response);
-      setConversations((c) => [...c, { message: value, response }]);
+      setConversations((convo) => {
+        const findLoading = convo.map((c: Conversation) => {
+          if (c.loadingResponse === true && c.response === undefined) {
+            return { ...c, loadingResponse: false, response };
+          }
+          return c;
+        });
+        return findLoading;
+      });
     }
   };
 
