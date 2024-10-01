@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 
+import { assets } from "../assets/assets";
 import "./chatPage.styles.scss";
 
 interface ChatPageProps {}
@@ -37,10 +38,38 @@ export default function ChatPage({}: ChatPageProps) {
           fontFamily: "Montserrat, sans-serif",
           height: "100vh",
           overflow: "auto",
+          marginBottom: "20px",
         }}
       >
-        <Stack spacing={1}>
-          <Card
+        <Stack spacing={1} className="message-response--container">
+          {conversations.map((item, i) => {
+            return (
+              <React.Fragment key={i}>
+                <Card
+                  className="message-container"
+                  sx={{ maxWidth: "50%", minWidth: "10%" }}
+                >
+                  <CardContent sx={{ paddingBottom: 0 }}>
+                    <Typography>{item.message}</Typography>
+                  </CardContent>
+                </Card>
+                <Card className="response-container">
+                  <CardContent sx={{ display: "flex", gap: "20px" }}>
+                    <img
+                      src={assets.gemini_icon}
+                      alt="Description of the image"
+                      height={30}
+                    />
+
+                    <Typography sx={{ fontWeight: "normal" }}>
+                      {item.response}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </React.Fragment>
+            );
+          })}
+          {/* <Card
             variant="soft"
             className="message-container"
             sx={{ width: "50%" }}
@@ -215,10 +244,10 @@ export default function ChatPage({}: ChatPageProps) {
                 enim ad minim veniam,
               </Typography>
             </CardContent>
-          </Card>
+          </Card> */}
         </Stack>
 
-        {conversations.map((item, i) => {
+        {/* {conversations.map((item, i) => {
           return (
             <Layout key={i}>
               <Card className="message-container">
@@ -233,7 +262,7 @@ export default function ChatPage({}: ChatPageProps) {
               </Card>
             </Layout>
           );
-        })}
+        })} */}
       </Box>
 
       <InputField

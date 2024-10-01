@@ -6,6 +6,7 @@ const theme = createTheme({
   palette: {},
   typography: {
     fontFamily: '"Montserrat", sans-serif',
+    fontSize: 14,
     h1: {
       fontFamily: '"Montserrat", sans-serif',
     },
