@@ -16,6 +16,6 @@ export const fetchGenerateResponseRequest = async (prompt: string) => {
       prompt,
     },
   });
-  console.log(data);
+  console.log("data", data);
   return data;
 };
