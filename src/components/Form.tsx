@@ -1,12 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
 import Textarea from "@mui/joy/Textarea";
 
-import "./App.css";
+interface FormProps {
+  minRows?: number;
+  placeholder?: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}
 
-export default function App() {
-  const [inputValue, setInputValue] = useState("");
+export default function Form({
+  placeholder = "Ask anything!",
+  minRows = 4,
+  onChange,
+  onSubmit,
+}: FormProps) {
   return (
     <Box
       sx={{
@@ -21,15 +31,15 @@ export default function App() {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          console.log(inputValue);
+          onSubmit?.(event);
         }}
       >
         <Textarea
-          placeholder="Ask anything!"
+          placeholder={placeholder}
           required
           sx={{ mb: 1 }}
-          minRows={4}
-          onChange={(e) => setInputValue(e.target.value)}
+          minRows={minRows}
+          onChange={onChange}
         />
         <Button type="submit">Submit</Button>
       </form>
