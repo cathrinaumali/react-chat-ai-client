@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
-
+import Intro from "../components/Intro";
 import { formatResponse } from "../utils/helper";
 import { assets } from "../assets/assets";
 import "./chatPage.styles.scss";
@@ -38,59 +38,63 @@ export default function ChatPage({}: ChatPageProps) {
           marginBottom: "20px",
         }}
       >
-        <Stack spacing={1} className="message-response--container">
-          {conversations.map((item, i) => {
-            const formattedResponse = formatResponse(item.response as string);
-            return (
-              <React.Fragment key={i}>
-                <Card
-                  className="message-container"
-                  sx={{ maxWidth: "50%", minWidth: "10%" }}
-                >
-                  <CardContent sx={{ paddingBottom: 0 }}>
-                    <Typography>{item.message}</Typography>
-                  </CardContent>
-                </Card>
-                <Card className="response-container">
-                  <CardContent sx={{ display: "flex", gap: "20px" }}>
-                    <img
-                      src={assets.gemini_icon}
-                      alt="Description of the image"
-                      height={30}
-                    />
+        {conversations?.length === 0 ? (
+          <Intro />
+        ) : (
+          <Stack spacing={1} className="message-response--container">
+            {conversations.map((item, i) => {
+              const formattedResponse = formatResponse(item.response as string);
+              return (
+                <React.Fragment key={i}>
+                  <Card
+                    className="message-container"
+                    sx={{ maxWidth: "50%", minWidth: "10%" }}
+                  >
+                    <CardContent sx={{ paddingBottom: 0 }}>
+                      <Typography>{item.message}</Typography>
+                    </CardContent>
+                  </Card>
+                  <Card className="response-container">
+                    <CardContent sx={{ display: "flex", gap: "20px" }}>
+                      <img
+                        src={assets.gemini_icon}
+                        alt="Description of the image"
+                        height={30}
+                      />
 
-                    <div>
-                      {item.loadingResponse ? (
-                        "loading"
-                      ) : (
-                        <Typography sx={{ fontWeight: "normal" }}>
-                          {item.response ? (
-                            <Typewriter
-                              onInit={(typewriter) => {
-                                typewriter
-                                  .typeString(formattedResponse as string)
-                                  .callFunction(() => {
-                                    console.log("String typed out!");
-                                  })
-                                  .callFunction(() => {
-                                    console.log("All strings were deleted");
-                                  })
-                                  .start();
-                              }}
-                              options={{
-                                delay: 0,
-                              }}
-                            />
-                          ) : null}
-                        </Typography>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </React.Fragment>
-            );
-          })}
-        </Stack>
+                      <div>
+                        {item.loadingResponse ? (
+                          "loading"
+                        ) : (
+                          <Typography sx={{ fontWeight: "normal" }}>
+                            {item.response ? (
+                              <Typewriter
+                                onInit={(typewriter) => {
+                                  typewriter
+                                    .typeString(formattedResponse as string)
+                                    .callFunction(() => {
+                                      console.log("String typed out!");
+                                    })
+                                    .callFunction(() => {
+                                      console.log("All strings were deleted");
+                                    })
+                                    .start();
+                                }}
+                                options={{
+                                  delay: 0,
+                                }}
+                              />
+                            ) : null}
+                          </Typography>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </React.Fragment>
+              );
+            })}
+          </Stack>
+        )}
       </Box>
 
       <InputField

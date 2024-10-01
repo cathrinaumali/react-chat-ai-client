@@ -122,7 +122,6 @@ export default function Layout({ children }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* <CssBaseline /> */}
       <AppBar position="fixed" open={open}>
         <Toolbar variant="dense">
           <IconButton
@@ -140,7 +139,7 @@ export default function Layout({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Gemini
+            Gemini AI
           </Typography>
         </Toolbar>
       </AppBar>

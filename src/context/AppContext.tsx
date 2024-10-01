@@ -1,5 +1,6 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { generateAnswer } from "../service/index";
+import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
 
 interface Conversation {
   message: string;
@@ -34,6 +35,7 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [recetPrompts, setRecentPrompts] = useState<string[]>([]);
   const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [isSnackBarOpen, setIsSnackBarOpen] = useState<boolean>(false);
 
   const onSubmitPrompt = async (value: string) => {
     setIsLoading(true);
@@ -42,20 +44,33 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
       ...c,
       { message: value, loadingResponse: true, response: undefined },
     ]);
+    try {
+      const result = await generateAnswer(value);
+      const {
+        data: { response },
+        success,
+      } = result;
+      console.log(result);
 
-    const result = await generateAnswer(value);
-    const {
-      data: { response },
-      success,
-    } = result;
-
-    if (success) {
-      setIsLoading(false);
-      setPromptResult(response);
+      if (success) {
+        setIsLoading(false);
+        setPromptResult(response);
+        setConversations((convo) => {
+          const findLoading = convo.map((c: Conversation) => {
+            if (c.loadingResponse === true && c.response === undefined) {
+              return { ...c, loadingResponse: false, response };
+            }
+            return c;
+          });
+          return findLoading;
+        });
+      }
+    } catch (error) {
+      setIsSnackBarOpen(true);
       setConversations((convo) => {
         const findLoading = convo.map((c: Conversation) => {
           if (c.loadingResponse === true && c.response === undefined) {
-            return { ...c, loadingResponse: false, response };
+            return { ...c, loadingResponse: false, response: "Error" };
           }
           return c;
         });
@@ -75,6 +90,18 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
       }}
     >
       {children}
+      <Snackbar
+        autoHideDuration={4000}
+        open={isSnackBarOpen}
+        message="Failed to generate response!"
+        color={"danger"}
+        onClose={(event, reason) => {
+          if (reason === "clickaway") {
+            return;
+          }
+          setIsSnackBarOpen(false);
+        }}
+      />
     </AppContext.Provider>
   );
 };
