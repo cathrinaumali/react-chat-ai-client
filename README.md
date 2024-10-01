@@ -11,23 +11,23 @@ Backend Api: https://react-chat-ai-server.vercel.app/ 
    Open your terminal and run the following command to clone the repository:
 
    ```bash
-   git clone  https://github.com/cathrinaumali/react-chat-ai-client.git
+      git clone  https://github.com/cathrinaumali/react-chat-ai-client.git
    
 2. **Navigate to the Project Directory**
    ```bash
-    cd react-chat-ai-client
+       cd react-chat-ai-client
    
 3. **Install Dependencies**
    ```bash
-    npm install
+       npm install
 5. **Set Up Environment Variables**
-```bash
-    VITE_API_URL=https://localhost::3000
-
+     ```bash
+       VITE_API_URL=https://localhost::3000
 
 
 ## Getting Started - Backend Repo
 # react-open-ai-server
+ 
 
 1. **Clone the Repository**
 
@@ -42,8 +42,8 @@ Backend Api: https://react-chat-ai-server.vercel.app/ 
 
 3. **Install Dependencies**
 
-  ```bash
-      npm install   
+     ```bash
+         npm install   
   
 5. **Set Up Environment Variables**
 ```bash
