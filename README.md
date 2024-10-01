@@ -50,7 +50,8 @@ Backend Api: https://react-chat-ai-server.vercel.app/ 
       VITE_API_URL=https://localhost::3000
       PORT=5000
       GEMINI_API_KEY=your_gemini_api
-   NOTE: To set up your **Gemini API key**, Go to the Gemini website and create an account. 
+   
+      NOTE: To set up your **Gemini API key**, Go to the Gemini website and create an account. 
 
 6. **Run the Development Server**
    ```bash
