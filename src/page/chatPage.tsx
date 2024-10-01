@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import LinearProgress from "@mui/material/LinearProgress";
 
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
@@ -61,33 +62,41 @@ export default function ChatPage({}: ChatPageProps) {
                         alt="Description of the image"
                         height={30}
                       />
-
-                      <div>
-                        {item.loadingResponse ? (
-                          "loading"
-                        ) : (
-                          <Typography sx={{ fontWeight: "normal" }}>
-                            {item.response ? (
-                              <Typewriter
-                                onInit={(typewriter) => {
-                                  typewriter
-                                    .typeString(formattedResponse as string)
-                                    .callFunction(() => {
-                                      console.log("String typed out!");
-                                    })
-                                    .callFunction(() => {
-                                      console.log("All strings were deleted");
-                                    })
-                                    .start();
-                                }}
-                                options={{
-                                  delay: 0,
-                                }}
-                              />
-                            ) : null}
-                          </Typography>
-                        )}
-                      </div>
+                      {item.loadingResponse ? (
+                        <Stack
+                          sx={{
+                            width: "100%",
+                            color: "grey.500",
+                          }}
+                          spacing={2}
+                        >
+                          <LinearProgress color="inherit" />
+                          <LinearProgress color="inherit" />
+                          <LinearProgress color="inherit" />
+                        </Stack>
+                      ) : (
+                        <Typography sx={{ fontWeight: "normal" }}>
+                          {item.response ? (
+                            <Typewriter
+                              onInit={(typewriter) => {
+                                typewriter
+                                  .typeString(formattedResponse as string)
+                                  .callFunction(() => {
+                                    console.log("String typed out!");
+                                  })
+                                  .callFunction(() => {
+                                    console.log("All strings were deleted");
+                                  })
+                                  .start();
+                              }}
+                              options={{
+                                delay: 0,
+                                cursorClassName: "typeWritterClass",
+                              }}
+                            />
+                          ) : null}
+                        </Typography>
+                      )}
                     </CardContent>
                   </Card>
                 </React.Fragment>
