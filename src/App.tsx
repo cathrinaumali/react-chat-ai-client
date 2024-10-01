@@ -1,16 +1,15 @@
 import React from "react";
-import ChatForm from "./page/ChatForm";
-// import "./App.css";
+import ChatPage from "./page/chatPage";
 
-import Layout from "./components/Layout";
 import { AppContextProvider } from "./context/AppContext";
+import AppThemeProvider from "./context/AppThemeProvider";
 
 export default function App() {
   return (
-    <AppContextProvider>
-      <Layout>
-        <ChatForm />
-      </Layout>
-    </AppContextProvider>
+    <AppThemeProvider>
+      <AppContextProvider>
+        <ChatPage />
+      </AppContextProvider>
+    </AppThemeProvider>
   );
 }
