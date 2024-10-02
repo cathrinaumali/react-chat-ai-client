@@ -123,7 +123,7 @@ export default function Layout({ children }) {
     // Check if the user is on a mobile device
     const isMobile = /Mobi|Android/i.test(window.navigator.userAgent);
     if (isMobile) {
-      setIsMenuOpen(true); // Set the menu to open if mobile
+      setIsMenuOpen(false); // Closed menu if mobile
     }
   }, []);
 
