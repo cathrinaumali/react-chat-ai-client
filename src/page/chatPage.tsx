@@ -21,6 +21,7 @@ interface ChatPageProps {}
 
 export default function ChatPage({}: ChatPageProps) {
   const [inputValue, setInputValue] = useState<string>("");
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const contextData = useContext(AppContext);
   const { promptResult, isLoading, conversations, onSubmitPrompt } =
@@ -32,6 +33,7 @@ export default function ChatPage({}: ChatPageProps) {
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
     event.preventDefault();
+    setIsSubmitted(true);
     onSubmitPrompt(inputValue);
     setInputValue("");
   };
@@ -119,10 +121,17 @@ export default function ChatPage({}: ChatPageProps) {
         className="input-container"
         isDisabled={inputValue === ""}
         inputText={inputValue}
-        onChange={(event) => setInputValue(event.target.value)}
+        onChange={(event) => {
+          setInputValue(event.target.value);
+          setIsSubmitted(false);
+        }}
         onButtonClick={onSubmit}
         onKeyDown={(event) => {
-          if (event.key === "Enter") {
+          if (
+            event.key === "Enter" &&
+            inputValue.trim() !== "" &&
+            !isSubmitted
+          ) {
             onSubmit(event);
           }
         }}
