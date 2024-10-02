@@ -37,15 +37,25 @@ export default function RowAndColumnSpacing() {
             <Typography> How can I help you today?</Typography>
           </Item>
         </Grid>
-        {logicalQuestions.map((item) => {
-          return (
-            <Grid size={3}>
+        <Box
+          sx={{
+            display: "grid",
+            gap: 2,
+            gridTemplateColumns: {
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+            },
+          }}
+        >
+          {logicalQuestions.map((item) => {
+            return (
               <Item sx={{ minHeight: "180px", backgroundColor: "#f0f4f9" }}>
                 <Typography> {item}</Typography>
               </Item>
-            </Grid>
-          );
-        })}
+            );
+          })}
+        </Box>
       </Grid>
     </Box>
   );
