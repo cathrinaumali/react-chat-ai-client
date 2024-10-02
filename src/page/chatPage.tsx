@@ -51,7 +51,7 @@ export default function ChatPage({}: ChatPageProps) {
         }}
       >
         {conversations?.length === 0 ? (
-          <Intro />
+          <Intro onClick={(value: string) => onSubmitPrompt(value)} />
         ) : (
           <Stack spacing={1} className="message-response--container">
             {conversations.map((item, i) => {

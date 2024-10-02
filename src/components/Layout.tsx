@@ -7,7 +7,6 @@ import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-// import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -204,9 +203,15 @@ export default function Layout({ children }) {
           </ListItem>
         </List>
         <Divider />
+
         <List>
-          {recetPrompts.map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          {["Recent", ...recetPrompts].map((text, index) => (
+            <ListItem
+              key={text}
+              disablePadding
+              disableGutters
+              sx={{ display: "block" }}
+            >
               <ListItemButton
                 sx={[
                   {
@@ -223,7 +228,23 @@ export default function Layout({ children }) {
                 ]}
               >
                 <ListItemText
-                  primary={text}
+                  secondary={
+                    text === "Recent" ? (
+                      <span
+                        style={{
+                          fontSize: "0.875rem",
+                          fontWeight: "bold",
+                          color: "#000",
+                          pointerEvents: "none",
+                        }}
+                      >
+                        {text}
+                      </span>
+                    ) : (
+                      text
+                    )
+                  }
+                  className="recent-list-item"
                   sx={[
                     open
                       ? {

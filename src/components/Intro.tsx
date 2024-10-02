@@ -24,14 +24,17 @@ const logicalQuestions = [
   "How can we balance economic growth with environmental sustainability?",
   "What is the meaning of life?",
 ];
-export default function RowAndColumnSpacing() {
+export default function Intro({
+  onClick,
+}: {
+  onClick?: (value: string) => void;
+}) {
   return (
     <Box sx={{ width: "100%" }} className="intro-container">
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid size={12}>
           <Item className="intro-header">
             <Typography>
-              {" "}
               <span>Hi there,</span>
             </Typography>
             <Typography> How can I help you today?</Typography>
@@ -50,7 +53,14 @@ export default function RowAndColumnSpacing() {
         >
           {logicalQuestions.map((item) => {
             return (
-              <Item sx={{ minHeight: "180px", backgroundColor: "#f0f4f9" }}>
+              <Item
+                sx={{
+                  minHeight: "180px",
+                  backgroundColor: "#f0f4f9",
+                  cursor: "pointer",
+                }}
+                onClick={() => onClick?.(item)}
+              >
                 <Typography> {item}</Typography>
               </Item>
             );
