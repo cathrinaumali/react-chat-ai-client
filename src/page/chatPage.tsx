@@ -26,6 +26,15 @@ export default function ChatPage({}: ChatPageProps) {
   const { promptResult, isLoading, conversations, onSubmitPrompt } =
     contextData || {};
 
+  const onSubmit = (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    event.preventDefault();
+    onSubmitPrompt(inputValue);
+    setInputValue("");
+  };
   return (
     <Layout>
       <Box
@@ -111,10 +120,11 @@ export default function ChatPage({}: ChatPageProps) {
         isDisabled={inputValue === ""}
         inputText={inputValue}
         onChange={(event) => setInputValue(event.target.value)}
-        onButtonClick={(event) => {
-          event.preventDefault();
-          onSubmitPrompt(inputValue);
-          setInputValue("");
+        onButtonClick={onSubmit}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            onSubmit(event);
+          }
         }}
       />
     </Layout>

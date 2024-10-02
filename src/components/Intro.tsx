@@ -32,7 +32,7 @@ export default function RowAndColumnSpacing() {
           <Item className="intro-header">
             <Typography>
               {" "}
-              <span>Hi There,</span>
+              <span>Hi there,</span>
             </Typography>
             <Typography> How can I help you today?</Typography>
           </Item>

@@ -1,6 +1,7 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { generateAnswer } from "../service/index";
 import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; // Use Alert for better styling
 
 interface Conversation {
   message: string;
@@ -93,7 +94,7 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
       <Snackbar
         autoHideDuration={4000}
         open={isSnackBarOpen}
-        message="Failed to generate response!"
+        message="Error!"
         color={"danger"}
         onClose={(event, reason) => {
           if (reason === "clickaway") {
@@ -101,7 +102,15 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
           }
           setIsSnackBarOpen(false);
         }}
-      />
+      >
+        <Alert
+          onClose={() => setIsSnackBarOpen(false)}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Failed to generate response!
+        </Alert>
+      </Snackbar>
     </AppContext.Provider>
   );
 };

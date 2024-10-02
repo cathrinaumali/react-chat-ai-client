@@ -28,6 +28,7 @@ interface InputFieldProps {
   isDisabled?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onButtonClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export default function InputField({
@@ -37,6 +38,7 @@ export default function InputField({
   className,
   onChange,
   onButtonClick,
+  onKeyDown,
 }: InputFieldProps) {
   return (
     <StyledTextField
@@ -45,6 +47,7 @@ export default function InputField({
       placeholder={placeholder}
       value={inputText}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
