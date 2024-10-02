@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
@@ -109,19 +109,27 @@ export default function Layout({ children }) {
   const { recetPrompts } = useContext(AppContext);
 
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setIsMenuOpen(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setIsMenuOpen(false);
   };
+
+  useEffect(() => {
+    // Check if the user is on a mobile device
+    const isMobile = /Mobi|Android/i.test(window.navigator.userAgent);
+    if (isMobile) {
+      setIsMenuOpen(true); // Set the menu to open if mobile
+    }
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={isMenuOpen}>
         <Toolbar variant="dense">
           <IconButton
             color="inherit"
@@ -132,7 +140,7 @@ export default function Layout({ children }) {
               {
                 marginRight: 5,
               },
-              open && { display: "none" },
+              isMenuOpen && { display: "none" },
             ]}
           >
             <MenuIcon />
@@ -142,7 +150,7 @@ export default function Layout({ children }) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={isMenuOpen}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -161,7 +169,7 @@ export default function Layout({ children }) {
                   minHeight: 48,
                   px: 2.5,
                 },
-                open
+                isMenuOpen
                   ? {
                       justifyContent: "initial",
                     }
@@ -176,7 +184,7 @@ export default function Layout({ children }) {
                     minWidth: 0,
                     justifyContent: "center",
                   },
-                  open
+                  isMenuOpen
                     ? {
                         mr: 3,
                       }
@@ -190,7 +198,7 @@ export default function Layout({ children }) {
               <ListItemText
                 primary={"New Chat"}
                 sx={[
-                  open
+                  isMenuOpen
                     ? {
                         opacity: 1,
                       }
@@ -218,7 +226,7 @@ export default function Layout({ children }) {
                     minHeight: 48,
                     px: 2.5,
                   },
-                  open
+                  isMenuOpen
                     ? {
                         justifyContent: "initial",
                       }
@@ -246,7 +254,7 @@ export default function Layout({ children }) {
                   }
                   className="recent-list-item"
                   sx={[
-                    open
+                    isMenuOpen
                       ? {
                           opacity: 1,
                         }
